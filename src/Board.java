@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Board data type
  */
@@ -92,8 +94,22 @@ public class Board {
         return null;
     }
 
-    public boolean equals(Object y) {
-        return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        return Arrays.equals(board, ((Board) o).board);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(board);
     }
 
     public Iterable<Board> neighbors() {
@@ -101,7 +117,17 @@ public class Board {
     }
 
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append(dimension());
+        sb.append("\n");
+        for (int i = 0; i < board.length; i++) {
+            sb.append(String.format("%2d ", (int) board[i]));
+            if ((i + 1) % dimension() == 0) {
+                sb.append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 
 }

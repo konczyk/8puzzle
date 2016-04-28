@@ -38,14 +38,14 @@ public class BoardTest {
         blocks[0][0] = 3;
         blocks[1][0] = 1;
 
-        assertThat(0, is(board.hamming()));
+        assertThat(board.hamming(), is(0));
     }
 
     @Test
     public void dimension() {
         Board board = new Board(new int[3][3]);
 
-        assertThat(3, is(board.dimension()));
+        assertThat(board.dimension(), is(3));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BoardTest {
             new int[]{7, 6, 5}};
         Board board = new Board(blocks);
 
-        assertThat(5, is(board.hamming()));
+        assertThat(board.hamming(), is(5));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BoardTest {
             new int[]{7, 8, 0}};
         Board board = new Board(blocks);
 
-        assertThat(0, is(board.hamming()));
+        assertThat(board.hamming(), is(0));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BoardTest {
             new int[]{7, 6, 5}};
         Board board = new Board(blocks);
 
-        assertThat(10, is(board.manhattan()));
+        assertThat(board.manhattan(), is(10));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class BoardTest {
             new int[]{7, 8, 0}};
         Board board = new Board(blocks);
 
-        assertThat(0, is(board.manhattan()));
+        assertThat(board.manhattan(), is(0));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class BoardTest {
             new int[]{7, 6, 5}};
         Board board = new Board(blocks);
 
-        assertThat(false, is(board.isGoal()));
+        assertThat(board.isGoal(), is(false));
     }
 
     @Test
@@ -111,7 +111,54 @@ public class BoardTest {
             new int[]{7, 8, 0}};
         Board board = new Board(blocks);
 
-        assertThat(true, is(board.isGoal()));
+        assertThat(board.isGoal(), is(true));
+    }
+
+    @Test
+    public void equals() {
+        int[][] blocks1 = new int[][]{
+            new int[]{1, 2},
+            new int[]{3, 0}};
+        Board board1 = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{1, 2},
+            new int[]{3, 0}};
+        Board board2 = new Board(blocks2);
+
+        assertThat(board1.equals(board1), is(true));
+        assertThat(board1.equals(board2), is(true));
+        assertThat(board2.equals(board1), is(true));
+    }
+
+    @Test
+    public void notEquals() {
+        int[][] blocks1 = new int[][]{
+            new int[]{1, 2},
+            new int[]{3, 0}};
+        Board board1 = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{1, 0},
+            new int[]{3, 2}};
+        Board board2 = new Board(blocks2);
+
+        assertThat(board1.equals(null), is(false));
+        assertThat(board1.equals(board2), is(false));
+        assertThat(board2.equals(board1), is(false));
+    }
+
+    @Test
+    public void boardAsString() {
+        int[][] blocks = new int[][]{
+            new int[]{1, 2, 3},
+            new int[]{4, 5, 6},
+            new int[]{7, 8, 0}};
+        Board board = new Board(blocks);
+
+        assertThat(
+            board.toString(),
+            is("3\n 1  2  3 \n 4  5  6 \n 7  8  0 \n"));
     }
 
 }
