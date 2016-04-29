@@ -1,6 +1,8 @@
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.Iterator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -115,6 +117,36 @@ public class BoardTest {
     }
 
     @Test
+    public void twinWhenBlankAtTop() {
+        int[][] blocks1 = new int[][]{
+            new int[]{0, 2},
+            new int[]{3, 1}};
+        Board board = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{0, 2},
+            new int[]{1, 3}};
+        Board twin = new Board(blocks2);
+
+        assertThat(board.twin(), equalTo(twin));
+    }
+
+    @Test
+    public void twinWhenBlankAtBottom() {
+        int[][] blocks1 = new int[][]{
+            new int[]{1, 2},
+            new int[]{3, 0}};
+        Board board = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{2, 1},
+            new int[]{3, 0}};
+        Board twin = new Board(blocks2);
+
+        assertThat(board.twin(), equalTo(twin));
+    }
+
+    @Test
     public void equals() {
         int[][] blocks1 = new int[][]{
             new int[]{1, 2},
@@ -146,6 +178,52 @@ public class BoardTest {
         assertThat(board1.equals(null), is(false));
         assertThat(board1.equals(board2), is(false));
         assertThat(board2.equals(board1), is(false));
+    }
+
+    @Test
+    public void topLeftNeighbors() {
+        int[][] blocks = new int[][]{
+            new int[]{1, 2},
+            new int[]{3, 0}};
+        Board board = new Board(blocks);
+
+        int[][] blocks1 = new int[][]{
+            new int[]{1, 0},
+            new int[]{3, 2}};
+        Board neighbor1 = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{1, 2},
+            new int[]{0, 3}};
+        Board neighbor2 = new Board(blocks2);
+
+        Iterator<Board> it = board.neighbors().iterator();
+
+        assertThat(it.next(), equalTo(neighbor1));
+        assertThat(it.next(), equalTo(neighbor2));
+    }
+
+    @Test
+    public void bottomRightNeighbors() {
+        int[][] blocks = new int[][]{
+            new int[]{0, 2},
+            new int[]{3, 1}};
+        Board board = new Board(blocks);
+
+        int[][] blocks1 = new int[][]{
+            new int[]{3, 2},
+            new int[]{0, 1}};
+        Board neighbor1 = new Board(blocks1);
+
+        int[][] blocks2 = new int[][]{
+            new int[]{2, 0},
+            new int[]{3, 1}};
+        Board neighbor2 = new Board(blocks2);
+
+        Iterator<Board> it = board.neighbors().iterator();
+
+        assertThat(it.next(), equalTo(neighbor1));
+        assertThat(it.next(), equalTo(neighbor2));
     }
 
     @Test

@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Board data type
@@ -27,6 +29,14 @@ public class Board {
 
         dimension = blocks.length;
         board = fillBlocks(blocks);
+    }
+
+    private Board(char[] blocks, int swapSrc, int swapDst) {
+        dimension = (int) Math.sqrt(blocks.length + 1);
+        board = blocks.clone();
+
+        board[swapSrc] = blocks[swapDst];
+        board[swapDst] = blocks[swapSrc];
     }
 
     private char[] fillBlocks(int[][] blocks2D) {
@@ -91,7 +101,11 @@ public class Board {
     }
 
     public Board twin() {
-        return null;
+        if (board[0] != 0 && board[1] != 0) {
+            return new Board(this.board, 0, 1);
+        } else {
+            return new Board(this.board, dimension(), dimension() + 1);
+        }
     }
 
     @Override
@@ -113,7 +127,72 @@ public class Board {
     }
 
     public Iterable<Board> neighbors() {
-        return null;
+        List<Board> neighbors = new ArrayList<>();
+
+        int blank = findBlank();
+
+        Board top = getTopNeighbor(blank);
+        if (top != null) {
+            neighbors.add(top);
+        }
+        Board bottom = getBottomNeighbor(blank);
+        if (bottom != null) {
+            neighbors.add(bottom);
+        }
+        Board left = getLeftNeighbor(blank);
+        if (left != null) {
+            neighbors.add(left);
+        }
+        Board right = getRightNeighbor(blank);
+        if (right != null) {
+            neighbors.add(right);
+        }
+
+        return neighbors;
+    }
+
+    private int findBlank() {
+        int blank = 0;
+        for (int i = 0; i < board.length; i++) {
+            if (board[i] == 0) {
+                blank = i;
+                break;
+            }
+        }
+
+        return blank;
+    }
+
+    private Board getTopNeighbor(int blank) {
+        if (blank < dimension()) {
+            return null;
+        } else {
+            return new Board(this.board, blank - dimension(), blank);
+        }
+    }
+
+    private Board getBottomNeighbor(int blank) {
+        if (blank / dimension() == dimension() - 1) {
+            return null;
+        } else {
+            return new Board(this.board, blank + dimension(), blank);
+        }
+    }
+
+    private Board getLeftNeighbor(int blank) {
+        if (blank % dimension() == 0) {
+            return null;
+        } else {
+            return new Board(this.board, blank - 1, blank);
+        }
+    }
+
+    private Board getRightNeighbor(int blank) {
+        if (blank % dimension() == dimension() - 1) {
+            return null;
+        } else {
+            return new Board(this.board, blank + 1, blank);
+        }
     }
 
     public String toString() {
