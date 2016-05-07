@@ -37,8 +37,8 @@ public class MinPQ<T extends Object & Comparable<? super T>> {
     }
 
     private void swim(int k) {
-        while (k > 1 && pq[(k-1)/2].compareTo(pq[k-1]) > 0) {
-            swap(k-1, (k-1)/2);
+        while (k > 1 && pq[k/2 - 1].compareTo(pq[k-1]) > 0) {
+            swap(k-1, k/2 - 1);
             k = k/2;
         }
     }
