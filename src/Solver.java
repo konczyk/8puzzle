@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class Solver {
 
     private final MinPQ<SearchNode> searchQueue = new MinPQ<>();
-    private final HashMap<SearchNode, Short> priorityCache = new HashMap<>();
     private final Board initialBoard;
     private final Board twinBoard;
 
@@ -33,19 +31,16 @@ public class Solver {
             this.moves = moves;
         }
 
-        private int priority() {
-            if (!priorityCache.containsKey(this)) {
-                priorityCache.put(this, (short) (board.manhattan() + moves));
-            }
-            return priorityCache.get(this);
-        }
-
         private Board prevBoard() {
             if (prev == null) {
                 return null;
             } else {
                 return prev.board;
             }
+        }
+
+        private int priority() {
+            return board.manhattan() + moves;
         }
 
         @Override
@@ -58,8 +53,11 @@ public class Solver {
                 return 1;
             }
 
-            if (priority() != otherNode.priority()) {
-                return priority() - otherNode.priority();
+            int thisPriority = priority();
+            int otherPriority = otherNode.priority();
+
+            if (thisPriority != otherPriority) {
+                return thisPriority - otherPriority;
             } else {
                 return board.hamming() - otherNode.board.hamming();
             }
@@ -77,7 +75,7 @@ public class Solver {
                 solutionNode = min;
                 break;
             }
-            for (Board board : min.board.neighbors()) {
+            for (Board board: min.board.neighbors()) {
                 if (!board.equals(min.prevBoard())) {
                     searchQueue.add(new SearchNode(board, min, min.moves+1));
                 }

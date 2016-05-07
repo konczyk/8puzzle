@@ -10,6 +10,9 @@ public class Board {
     private final char[] board;
     private final int dimension;
 
+    private int manhattanCache = -1;
+    private int hammingCache = -1;
+
     public Board(int[][] blocks) {
         if (blocks == null) {
             throw new NullPointerException("blocks are null");
@@ -29,6 +32,9 @@ public class Board {
 
         dimension = blocks.length;
         board = fillBlocks(blocks);
+
+        manhattanCache = manhattan();
+        hammingCache = hamming();
     }
 
     private Board(char[] blocks, int swapSrc, int swapDst) {
@@ -56,44 +62,42 @@ public class Board {
     }
 
     public int hamming() {
-        int displaced = 0;
-        for (int i = 0; i < board.length; i++) {
-            if (!pieceInPlace(i)) {
-                displaced++;
+        if (hammingCache < 0) {
+            hammingCache = 0;
+            for (int i = 0; i < board.length; i++) {
+                if (!pieceInPlace(i)) {
+                    hammingCache++;
+                }
             }
         }
 
-        return displaced;
+        return hammingCache;
     }
 
     public int manhattan() {
-        int distances = 0;
-        for (int i = 0; i < board.length; i++) {
-            if (!pieceInPlace(i)) {
-                distances += calculateDistance(i);
+        if (manhattanCache < 0) {
+            manhattanCache = 0;
+            for (int i = 0; i < board.length; i++) {
+                if (!pieceInPlace(i)) {
+                    manhattanCache += calculateDistance(i);
+                }
             }
         }
 
-        return distances;
+        return manhattanCache;
     }
 
     private int calculateDistance(int idx) {
         int currentRow = idx / dimension();
         int currentCol = idx - currentRow * dimension();
         int finalRow = (board[idx] - 1) / dimension();
-        int finalCol = (board[idx]  - 1) - finalRow * dimension();
+        int finalCol = (board[idx] - 1) - finalRow * dimension();
 
         return Math.abs(finalRow - currentRow) + Math.abs(finalCol - currentCol);
     }
 
     public boolean isGoal() {
-        for (int i = 0; i < board.length; i++) {
-            if (!pieceInPlace(i)) {
-                return false;
-            }
-        }
-
-        return true;
+        return hamming() == 0;
     }
 
     private boolean pieceInPlace(int idx) {
