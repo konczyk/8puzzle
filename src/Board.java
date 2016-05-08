@@ -135,22 +135,10 @@ public class Board {
 
         int blank = findBlank();
 
-        Board top = getTopNeighbor(blank);
-        if (top != null) {
-            neighbors.add(top);
-        }
-        Board bottom = getBottomNeighbor(blank);
-        if (bottom != null) {
-            neighbors.add(bottom);
-        }
-        Board left = getLeftNeighbor(blank);
-        if (left != null) {
-            neighbors.add(left);
-        }
-        Board right = getRightNeighbor(blank);
-        if (right != null) {
-            neighbors.add(right);
-        }
+        addTopNeighbor(neighbors, blank);
+        addBottomNeighbor(neighbors, blank);
+        addLeftNeighbor(neighbors, blank);
+        addRightNeighbor(neighbors, blank);
 
         return neighbors;
     }
@@ -167,35 +155,27 @@ public class Board {
         return blank;
     }
 
-    private Board getTopNeighbor(int blank) {
-        if (blank < dimension()) {
-            return null;
-        } else {
-            return new Board(this.board, blank - dimension(), blank);
+    private void addTopNeighbor(List<Board> neighbors, int blank) {
+        if (blank >= dimension()) {
+            neighbors.add(new Board(this.board, blank - dimension(), blank));
         }
     }
 
-    private Board getBottomNeighbor(int blank) {
-        if (blank / dimension() == dimension() - 1) {
-            return null;
-        } else {
-            return new Board(this.board, blank + dimension(), blank);
+    private void addBottomNeighbor(List<Board> neighbors, int blank) {
+        if (blank / dimension() != dimension() - 1) {
+            neighbors.add(new Board(this.board, blank + dimension(), blank));
         }
     }
 
-    private Board getLeftNeighbor(int blank) {
-        if (blank % dimension() == 0) {
-            return null;
-        } else {
-            return new Board(this.board, blank - 1, blank);
+    private void addLeftNeighbor(List<Board> neighbors, int blank) {
+        if (blank % dimension() != 0) {
+            neighbors.add(new Board(this.board, blank - 1, blank));
         }
     }
 
-    private Board getRightNeighbor(int blank) {
-        if (blank % dimension() == dimension() - 1) {
-            return null;
-        } else {
-            return new Board(this.board, blank + 1, blank);
+    private void addRightNeighbor(List<Board> neighbors, int blank) {
+        if (blank % dimension() != dimension() - 1) {
+            neighbors.add(new Board(this.board, blank + 1, blank));
         }
     }
 
