@@ -18,7 +18,7 @@ public class Board {
             throw new NullPointerException("blocks are null");
         }
 
-        if (blocks.length < 2 || blocks.length > 128) {
+        if (blocks.length < 2 || blocks.length > 127) {
             throw new IllegalArgumentException(
                 "blocks dimension should be between 2 and 128 inclusive");
         }
