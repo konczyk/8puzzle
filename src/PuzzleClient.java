@@ -12,7 +12,7 @@ public class PuzzleClient {
     @Parameter(
         names = {"--size", "-s"},
         description = "Random puzzle size (2 - 127)",
-        validateWith = BoardSizeValidator.class)
+        validateWith = SizeValidator.class)
     private int size;
 
     @Parameter(
@@ -27,10 +27,10 @@ public class PuzzleClient {
             + "(board size first, followed by block rows)")
     private boolean stdin = false;
 
-    public static class BoardSizeValidator implements IParameterValidator {
+    public static class SizeValidator implements IParameterValidator {
         @Override
         public void validate(String name, String value) throws ParameterException {
-            String msg = "Parameter --size should be a positive integer"
+            String msg = "Parameter --size should be a positive integer "
                 + "between 2 and 127 (found " + value + ")";
             try {
                 int n = Integer.parseInt(value);
@@ -67,7 +67,7 @@ public class PuzzleClient {
     }
 
     private void run() {
-        Board initial = null;
+        Board initial;
         if (stdin) {
             initial = new Board(loadBoardFromStdIn());
         } else {
