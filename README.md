@@ -8,7 +8,7 @@ Build project:
 
     $ ./gradlew assemble
 
-Try to solve a solvable puzzle read for a standard input:
+Try to solve a solvable puzzle read from the standard input:
 
     $ cat data/puzzle3.txt | java -cp build/libs/8puzzle.jar PuzzleClient -
     Minimum number of moves: 3
@@ -33,7 +33,7 @@ Try to solve a solvable puzzle read for a standard input:
      4  5  6
      7  8  0
 
-Try to solve an unsolvable puzzle read for a standard input:
+Try to solve an unsolvable puzzle read from the standard input:
 
     $ cat data/puzzle3-unsolvable.txt | java -cp build/libs/8puzzle.jar PuzzleClient -
     Puzzle is unsolvable
