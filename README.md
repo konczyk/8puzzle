@@ -37,3 +37,28 @@ Try to solve an unsolvable puzzle read for a standard input:
 
     $ cat data/puzzle3-unsolvable.txt | java -cp build/libs/8puzzle.jar PuzzleClient -
     Puzzle is unsolvable
+
+Try to solve a randomly generated puzzle of size 4x4:
+
+    $ java -cp build/libs/8puzzle.jar PuzzleClient -s 4
+    Minimum number of moves: 45
+
+    4
+     7 14 11  0
+     2  4  1  6
+    10  3 15  8
+     5 12  9 13
+
+    4
+     7 14  0 11
+     2  4  1  6
+    10  3 15  8
+     5 12  9 13
+
+     ...
+
+     4
+     1  2  3  4
+     5  6  7  8
+     9 10 11 12
+    13 14 15  0

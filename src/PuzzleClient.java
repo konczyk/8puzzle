@@ -2,6 +2,9 @@ import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class PuzzleClient {
@@ -67,11 +70,14 @@ public class PuzzleClient {
         Board initial = null;
         if (stdin) {
             initial = new Board(loadBoardFromStdIn());
+        } else {
+            initial = new Board(loadBoardFromRandom());
         }
         Solver solver = new Solver(initial);
 
         if (!solver.isSolvable()) {
             System.out.println("Puzzle is unsolvable");
+            System.out.println(initial + "\n");
         } else {
             System.out.println("Minimum number of moves: "
                                 + solver.moves() + "\n");
@@ -84,10 +90,10 @@ public class PuzzleClient {
     private int[][] loadBoardFromStdIn() {
         int[][] blocks;
         try (Scanner scanner = new Scanner(System.in)) {
-            int size = scanner.nextInt();
-            blocks = new int[size][size];
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size; j++) {
+            int dim = scanner.nextInt();
+            blocks = new int[dim][dim];
+            for (int i = 0; i < dim; i++) {
+                for (int j = 0; j < dim; j++) {
                     blocks[i][j] = scanner.nextInt();
                 }
             }
@@ -95,4 +101,23 @@ public class PuzzleClient {
 
         return blocks;
     }
+
+    private int[][] loadBoardFromRandom() {
+        int[][] blocks = new int[size][size];
+        List<Integer> items = new ArrayList<>();
+        for (int i = 0; i < size*size-1; i++) {
+            items.add(i+1);
+        }
+        items.add(0);
+
+        Collections.shuffle(items);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                blocks[i][j] = items.get(i * size + j);
+            }
+        }
+
+        return blocks;
+    }
+
 }
