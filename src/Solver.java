@@ -69,7 +69,7 @@ public class Solver {
         searchQueue.add(new SearchNode(initialBoard, null, 0));
         searchQueue.add(new SearchNode(twinBoard, null, 0));
 
-        while (solutionNode == null) {
+        while (solutionNode == null && !Thread.currentThread().isInterrupted()) {
             SearchNode min = searchQueue.poll();
             if (min.board.isGoal()) {
                 solutionNode = min;
@@ -103,7 +103,7 @@ public class Solver {
             ptr = ptr.prev;
         }
         Collections.reverse(boards);
-        if (boards.get(0).equals(twinBoard)) {
+        if (boards.size() == 0 || boards.get(0).equals(twinBoard)) {
             return null;
         } else {
             return boards;

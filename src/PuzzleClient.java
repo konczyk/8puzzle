@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 
 public class PuzzleClient {
 
@@ -26,6 +27,11 @@ public class PuzzleClient {
         description = "Read data from stdin "
             + "(board size first, followed by block rows)")
     private boolean stdin = false;
+
+    @Parameter(
+        names = {"--gui", "-g"},
+        description = "Run GUI Visualizer")
+    private boolean gui = false;
 
     public static class SizeValidator implements IParameterValidator {
         @Override
@@ -73,18 +79,27 @@ public class PuzzleClient {
         } else {
             initial = new Board(loadBoardFromRandom());
         }
-        Solver solver = new Solver(initial);
 
-        if (!solver.isSolvable()) {
-            System.out.println("Puzzle is unsolvable");
-            System.out.println(initial + "\n");
+        if (gui) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new Visualizer(initial);
+                }
+            });
         } else {
-            System.out.println("Minimum number of moves: "
-                                + solver.moves() + "\n");
-            for (Board board : solver.solution()) {
-                System.out.println(board);
+            Solver solver = new Solver(initial);
+            if (!solver.isSolvable()) {
+                System.out.println("Puzzle is unsolvable");
+                System.out.println(initial + "\n");
+            } else {
+                System.out.println("Minimum number of moves: "
+                    + solver.moves() + "\n");
+                for (Board board : solver.solution()) {
+                    System.out.println(board);
+                }
             }
         }
+
     }
 
     private int[][] loadBoardFromStdIn() {
