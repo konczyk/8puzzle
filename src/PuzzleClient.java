@@ -52,6 +52,7 @@ public class PuzzleClient {
     public static void main(String[] args) {
         PuzzleClient client = new PuzzleClient();
         JCommander jc = new JCommander(client);
+        jc.setProgramName("PuzzleClient");
         try {
             jc.parse(args);
             client.validate();

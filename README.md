@@ -2,11 +2,28 @@
 
 Solve the 8-puzzle problem using the A* search algorithm.
 
+## Task
+
+Rearrange the blocks so that they are in order, using as few moves as possible.  
+Blocks can be slided horizontally or vertically into the blank square.
+
+## Implementation constraints
+- Fixed public API for `Board` and `Solver`
+- All `Board` methods should have a running time proportional to n<sup>2</sup>
+in the worst case
+- Priority Queue for A* algorithm implementation
+- `Board` and `Solver` should not call library functions except those in
+`java.lang` and `java.util`
+
 ## Examples
 
 Build project:
 
     $ ./gradlew assemble
+
+Client options:
+
+    $ java -cp build/libs/8puzzle.jar PuzzleClient -h
 
 Try to solve a solvable puzzle read from the standard input:
 
