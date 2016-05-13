@@ -73,7 +73,7 @@ public class PuzzleClient {
     }
 
     private void run() {
-        Board initial;
+        final Board initial;
         if (stdin) {
             initial = new Board(loadBoardFromStdIn());
         } else {

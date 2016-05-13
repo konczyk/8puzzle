@@ -126,12 +126,12 @@ public class Visualizer extends JFrame {
         }
     }
 
-    private void draw(Solver solver) {
+    private void draw(final Solver solver) {
 
         if (!solver.isSolvable()) {
             statusLabel.setText(UNSOLVABLE_INFO);
         } else {
-            Iterator<Board> it = solver.solution().iterator();
+            final Iterator<Board> it = solver.solution().iterator();
             it.next();
             Timer timer = new Timer(MOVE_DELAY, new ActionListener() {
                 private int move = 1;
