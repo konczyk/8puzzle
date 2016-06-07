@@ -2,20 +2,25 @@
 
 Solve the 8-puzzle problem using the A* search algorithm.
 
-## Task
+## Goal
 
 Rearrange the blocks so that they are in order, using as few moves as possible.  
 Blocks can be slided horizontally or vertically into the blank square.
 
 ## Implementation constraints
 - Fixed public API for `Board` and `Solver`
-- All `Board` methods should have a running time proportional to n<sup>2</sup>
-in the worst case
-- Priority Queue for A* algorithm implementation
 - `Board` and `Solver` should not call library functions except those in
 `java.lang` and `java.util`
+- Priority Queue to implement A* algorithm
 
-## Examples
+## Performance requirements
+- All `Board` methods should have a running time proportional to n<sup>2</sup>
+in the worst case
+
+## Enhancements
+- Use only one PQ to run the A* algorithm on the initial board and its twin
+
+## Sample client
 
 Build project:
 
