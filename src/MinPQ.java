@@ -19,6 +19,9 @@ public class MinPQ<T extends Object & Comparable<? super T>> {
     }
 
     public void add(T item) {
+        if (item == null) {
+            throw new NullPointerException("item is null");
+        }
         // resize the queue if needed
         if (pq.length == size) {
             resize(Math.max(2*pq.length, 2));

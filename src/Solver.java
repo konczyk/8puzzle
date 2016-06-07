@@ -12,7 +12,7 @@ public class Solver {
 
     public Solver(Board initial) {
         if (initial == null) {
-            throw new NullPointerException("initial is null");
+            throw new NullPointerException("initial board is null");
         }
 
         this.initialBoard = initial;

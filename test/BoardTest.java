@@ -3,30 +3,47 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.rules.ExpectedException;
 
-@RunWith(JUnit4.class)
 public class BoardTest {
 
-    @Test(expected = NullPointerException.class)
-    public void throwsExceptionOnNullBlocks() {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void constructWithNullThrowsException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("blocks are null");
+
         new Board(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsExceptionOnTooSmallBlocksArray() {
+    @Test
+    public void constructWithTooFewBlocksThrowsException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(
+            "blocks dimension should be between 2 and 128 inclusive");
+
         new Board(new int[1][1]);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsExceptionOnTooBigBlocksArray() {
+    @Test
+    public void constructWithTooManyBlocksThrowsException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(
+            "blocks dimension should be between 2 and 128 inclusive");
+
         new Board(new int[129][129]);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void throwsExceptionOnInvalidBlocksStructure() {
+    @Test
+    public void constructWithJaggedBlocksThrowsException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage(
+            "blocks must have the same number of rows and columns");
+
         new Board(new int[10][5]);
     }
     

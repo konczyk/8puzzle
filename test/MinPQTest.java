@@ -2,18 +2,28 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.rules.ExpectedException;
 
-@RunWith(JUnit4.class)
 public class MinPQTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void sizeOfEmptyQueue() {
         MinPQ<Integer> pq = new MinPQ<>();
 
         assertThat(pq.size(), is(0));
+    }
+
+    @Test
+    public void addNullThrowsException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("item is null");
+
+        new MinPQ<Integer>().add(null);
     }
 
     @Test

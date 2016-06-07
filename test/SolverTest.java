@@ -4,12 +4,14 @@ import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.util.Iterator;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.rules.ExpectedException;
 
-@RunWith(JUnit4.class)
 public class SolverTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private final int[][] solvableBlocks = new int[][]{
         new int[]{0, 1},
@@ -19,8 +21,11 @@ public class SolverTest {
         new int[]{0, 1},
         new int[]{2, 3}};
 
-    @Test(expected = NullPointerException.class)
-    public void throwExceptionOnNullInitialBoard() {
+    @Test
+    public void constructWithNullThrowsException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("initial board is null");
+
         new Solver(null);
     }
 
