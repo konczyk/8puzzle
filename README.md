@@ -85,6 +85,7 @@ Try to solve a randomly generated puzzle of size 4x4:
      9 10 11 12
     13 14 15  0
 
-Try to solve a randomly generated puzzle of size 4x4 with a graphical output ([see sample animation](data/visualizer.gif?raw=true)):
+Try to solve a randomly generated puzzle of size 4x4 with a graphical output
+([sample animation](data/visualizer.gif?raw=true)):
 
     $ java -cp build/libs/8puzzle.jar PuzzleClient -g -s 4
