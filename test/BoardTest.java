@@ -1,8 +1,8 @@
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Iterator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -214,10 +214,7 @@ public class BoardTest {
             new int[]{0, 3}};
         Board neighbor2 = new Board(blocks2);
 
-        Iterator<Board> it = board.neighbors().iterator();
-
-        assertThat(it.next(), equalTo(neighbor1));
-        assertThat(it.next(), equalTo(neighbor2));
+        assertThat(board.neighbors(), contains(neighbor1, neighbor2));
     }
 
     @Test
@@ -237,10 +234,7 @@ public class BoardTest {
             new int[]{3, 1}};
         Board neighbor2 = new Board(blocks2);
 
-        Iterator<Board> it = board.neighbors().iterator();
-
-        assertThat(it.next(), equalTo(neighbor1));
-        assertThat(it.next(), equalTo(neighbor2));
+        assertThat(board.neighbors(), contains(neighbor1, neighbor2));
     }
 
     @Test

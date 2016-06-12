@@ -1,9 +1,8 @@
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.util.Iterator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -55,10 +54,9 @@ public class SolverTest {
             new int[]{1, 2},
             new int[]{3, 0}};
 
-        Iterator<Board> it = solver.solution().iterator();
-        assertThat(it.next(), equalTo(new Board(solvableBlocks)));
-        assertThat(it.next(), equalTo(new Board(move1)));
-        assertThat(it.next(), equalTo(new Board(move2)));
+        assertThat(solver.solution(),
+                   contains(new Board(solvableBlocks), new Board(move1),
+                            new Board(move2)));
     }
 
     @Test
