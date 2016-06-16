@@ -22,7 +22,7 @@ in the worst case
 
 ## Sample client
 
-Build project:
+Build a jar file:
 
     $ ./gradlew assemble
 
